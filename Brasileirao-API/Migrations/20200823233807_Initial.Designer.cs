@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Brasileirao_API.Migrations
 {
     [DbContext(typeof(BrasileiraoDBContext))]
-    [Migration("20200823143212_VersaoInicial")]
-    partial class VersaoInicial
+    [Migration("20200823233807_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,13 @@ namespace Brasileirao_API.Migrations
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<int>("GuestGols")
+                        .HasColumnType("int");
+
                     b.Property<int>("GuestTeamId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HomeGols")
                         .HasColumnType("int");
 
                     b.Property<int>("HomeTeamId")
@@ -48,6 +54,107 @@ namespace Brasileirao_API.Migrations
                     b.HasIndex("HomeTeamId");
 
                     b.ToTable("Game");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Day = "26/08",
+                            GuestGols = 0,
+                            GuestTeamId = 10,
+                            HomeGols = 0,
+                            HomeTeamId = 7,
+                            Hour = "17:00",
+                            Round = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Day = "26/08",
+                            GuestGols = 0,
+                            GuestTeamId = 4,
+                            HomeGols = 0,
+                            HomeTeamId = 3,
+                            Hour = "19:00",
+                            Round = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Day = "27/08",
+                            GuestGols = 0,
+                            GuestTeamId = 8,
+                            HomeGols = 0,
+                            HomeTeamId = 1,
+                            Hour = "15:00",
+                            Round = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Day = "27/08",
+                            GuestGols = 0,
+                            GuestTeamId = 15,
+                            HomeGols = 0,
+                            HomeTeamId = 9,
+                            Hour = "17:00",
+                            Round = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Day = "27/08",
+                            GuestGols = 0,
+                            GuestTeamId = 16,
+                            HomeGols = 0,
+                            HomeTeamId = 19,
+                            Hour = "19:00",
+                            Round = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Day = "28/08",
+                            GuestGols = 0,
+                            GuestTeamId = 5,
+                            HomeGols = 0,
+                            HomeTeamId = 18,
+                            Hour = "15:00",
+                            Round = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Day = "28/08",
+                            GuestGols = 0,
+                            GuestTeamId = 6,
+                            HomeGols = 0,
+                            HomeTeamId = 11,
+                            Hour = "17:00",
+                            Round = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Day = "28/08",
+                            GuestGols = 0,
+                            GuestTeamId = 13,
+                            HomeGols = 0,
+                            HomeTeamId = 17,
+                            Hour = "19:00",
+                            Round = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Day = "29/08",
+                            GuestGols = 0,
+                            GuestTeamId = 14,
+                            HomeGols = 0,
+                            HomeTeamId = 2,
+                            Hour = "15:00",
+                            Round = 1
+                        });
                 });
 
             modelBuilder.Entity("Brasileirao_API.Models.LiveGame", b =>
@@ -60,6 +167,14 @@ namespace Brasileirao_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Minutes")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Time")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -76,6 +191,68 @@ namespace Brasileirao_API.Migrations
                     b.HasIndex("GameId");
 
                     b.ToTable("LiveGame");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            GameId = 1,
+                            Message = "O árbitro Rafael Traci para o jogo e vai até a cabine de vídeo. Jogada revisada é do chute de Vitinho, desviado na mão de Kannemann.",
+                            Minutes = "33'",
+                            Time = "1º Tempo",
+                            Title = "VAI NO VAR!",
+                            Type = "text"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            GameId = 1,
+                            Message = "É um ataque mais leve, sem um jogador de referência, até porque temos jogadores rápidos. O lance do gol foi assim.",
+                            Minutes = "40'",
+                            Time = "1º Tempo",
+                            Title = "FALA, GALHARDO",
+                            Type = "text"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            GameId = 1,
+                            Message = "Atlético bombardeia o Cruzeiro em busca do gol de empate. Após uma série de finalizações em sequências (bloqueadas), Allan fica com o rebote e tenta um chute de primeira, mas a bola sobe muito e vai pra fora.",
+                            Minutes = "12'",
+                            Time = "2º Tempo",
+                            Title = "NO REBOTE... PRA FORA!",
+                            Type = "text"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            GameId = 1,
+                            Message = "Mensagem de quem faz este Tempo Real: vou deixar 'escanteio marcado' aqui no 'Ctrl + C'... Mais um!",
+                            Minutes = "26'",
+                            Time = "2º Tempo",
+                            Title = "DE NOVO...",
+                            Type = "text"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            GameId = 2,
+                            Message = "Matheuzinho tenta afastar, mas chuta o vento",
+                            Minutes = "7'",
+                            Time = "1º Tempo",
+                            Title = "ESPIRROU O TACO!",
+                            Type = "text"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            GameId = 2,
+                            Message = "Lateral do Inter entorta o marcador do Dragão",
+                            Minutes = "22'",
+                            Time = "2º Tempo",
+                            Title = "OLHA O RODINEI!",
+                            Type = "text"
+                        });
                 });
 
             modelBuilder.Entity("Brasileirao_API.Models.PushToken", b =>

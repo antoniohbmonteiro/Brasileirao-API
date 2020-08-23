@@ -18,6 +18,10 @@ namespace Brasileirao_API.Models
         public string Day { get; set; }
         [Required]
         public string Hour { get; set; }
+        [Required]
+        public int HomeGols { get; set; } = 0;
+        [Required]
+        public int GuestGols { get; set; } = 0;
 
 
         [ForeignKey("HomeTeam")]

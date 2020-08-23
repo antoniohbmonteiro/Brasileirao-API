@@ -111,9 +111,9 @@ namespace Brasileirao_API.Controllers
             var tokenModel = new TokenModel
             {
                 Tokens = registrationTokens,
-                ContentAvailable = "true",
-                NotificationPush = new TokenModel.Notification {Title= "Teste C#", Body = "Body C#"},
-                DataPush = new TokenModel.Data { Extra = "Teste Extra"}
+                ContentAvailable = true,
+                NotificationPush = new TokenModel.Notification { Title = "Teste C#", Body = "Body C#" },
+                DataPush = new TokenModel.Data { Extra = Newtonsoft.Json.JsonConvert.SerializeObject(liveGame) }
             };
 
             var tokenJson = Newtonsoft.Json.JsonConvert.SerializeObject(tokenModel);
@@ -124,15 +124,15 @@ namespace Brasileirao_API.Controllers
             var client = _clientFactory.CreateClient();
 
             var response = await client.SendAsync(request);
+
+            string pushResponse = "";
+
             if (response.IsSuccessStatusCode)
             {
-                var teste = "funfou";
-                var teste1 = teste;
-                var teste2 = teste1;
-
+                pushResponse = await response.Content.ReadAsStringAsync();
             }
 
-            return CreatedAtAction("GetLiveGame", new { id = liveGame.Id }, liveGame);
+            return CreatedAtAction("GetLiveGame", new { id = liveGame.Id, pushResponse }, liveGame);
         }
 
         // DELETE: api/LiveGames/5

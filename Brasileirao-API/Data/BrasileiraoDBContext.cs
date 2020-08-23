@@ -19,6 +19,147 @@ namespace Brasileirao_API.Data
         {
             var teams = JsonConvert.DeserializeObject<List<Team>>(GetTeams());
             modelBuilder.Entity<Team>().HasData(teams);
+
+            var games = JsonConvert.DeserializeObject<List<Game>>(GetGames());
+            modelBuilder.Entity<Game>().HasData(games);
+
+            var liveGames = JsonConvert.DeserializeObject<List<LiveGame>>(GetLiveGames());
+            modelBuilder.Entity<LiveGame>().HasData(liveGames);
+        }
+
+        private string GetLiveGames()
+        {
+            return @"[
+    {
+        ""id"":1,
+        ""type"":""text"",
+        ""title"":""VAI NO VAR!"",
+        ""message"":""O árbitro Rafael Traci para o jogo e vai até a cabine de vídeo. Jogada revisada é do chute de Vitinho, desviado na mão de Kannemann."",
+        ""time"":""1º Tempo"",
+        ""minutes"":""33'"",
+        ""gameId"":1
+    },{
+        ""id"":2,
+        ""type"":""text"",
+        ""title"":""FALA, GALHARDO"",
+        ""message"":""É um ataque mais leve, sem um jogador de referência, até porque temos jogadores rápidos. O lance do gol foi assim."",
+        ""time"":""1º Tempo"",
+        ""minutes"":""40'"",
+        ""gameId"":1
+    },{
+        ""id"":3,
+        ""type"":""text"",
+        ""title"":""NO REBOTE... PRA FORA!"",
+        ""message"":""Atlético bombardeia o Cruzeiro em busca do gol de empate. Após uma série de finalizações em sequências (bloqueadas), Allan fica com o rebote e tenta um chute de primeira, mas a bola sobe muito e vai pra fora."",
+        ""time"":""2º Tempo"",
+        ""minutes"":""12'"",
+        ""gameId"":1
+    },{
+        ""id"":4,
+        ""type"":""text"",
+        ""title"":""DE NOVO..."",
+        ""message"":""Mensagem de quem faz este Tempo Real: vou deixar 'escanteio marcado' aqui no 'Ctrl + C'... Mais um!"",
+        ""time"":""2º Tempo"",
+        ""minutes"":""26'"",
+        ""gameId"":1
+    },
+    {
+        ""id"":5,
+        ""type"":""text"",
+        ""title"":""ESPIRROU O TACO!"",
+        ""message"":""Matheuzinho tenta afastar, mas chuta o vento"",
+        ""time"":""1º Tempo"",
+        ""minutes"":""7'"",
+        ""gameId"":2
+    },
+    {
+        ""id"":6,
+        ""type"":""text"",
+        ""title"":""OLHA O RODINEI!"",
+        ""message"":""Lateral do Inter entorta o marcador do Dragão"",
+        ""time"":""2º Tempo"",
+        ""minutes"":""22'"",
+        ""gameId"":2
+    }
+]";
+        }
+
+        private string GetGames()
+        {
+            return @"[
+    {
+        ""id"":1,
+        ""round"":1,
+        ""day"":""26/08"",
+        ""hour"":""17:00"",
+        ""homeTeamId"":7,
+        ""guestTeamId"":10
+    },
+    {
+        ""id"":2,
+        ""round"":1,
+        ""day"":""26/08"",
+        ""hour"":""19:00"",
+        ""homeTeamId"":3,
+        ""guestTeamId"":4
+    },
+    {
+        ""id"":3,
+        ""round"":1,
+        ""day"":""27/08"",
+        ""hour"":""15:00"",
+        ""homeTeamId"":1,
+        ""guestTeamId"":8
+    },
+    {
+        ""id"":4,
+        ""round"":1,
+        ""day"":""27/08"",
+        ""hour"":""17:00"",
+        ""homeTeamId"":9,
+        ""guestTeamId"":15
+    },
+    {
+        ""id"":5,
+        ""round"":1,
+        ""day"":""27/08"",
+        ""hour"":""19:00"",
+        ""homeTeamId"":19,
+        ""guestTeamId"":16
+    },
+    {
+        ""id"":6,
+        ""round"":1,
+        ""day"":""28/08"",
+        ""hour"":""15:00"",
+        ""homeTeamId"":18,
+        ""guestTeamId"":5
+    },
+    {
+        ""id"":7,
+        ""round"":1,
+        ""day"":""28/08"",
+        ""hour"":""17:00"",
+        ""homeTeamId"":11,
+        ""guestTeamId"":6
+    },
+    {
+        ""id"":8,
+        ""round"":1,
+        ""day"":""28/08"",
+        ""hour"":""19:00"",
+        ""homeTeamId"":17,
+        ""guestTeamId"":13
+    },
+    {
+        ""id"":9,
+        ""round"":1,
+        ""day"":""29/08"",
+        ""hour"":""15:00"",
+        ""homeTeamId"":2,
+        ""guestTeamId"":14
+    }
+]";
         }
 
         private string GetTeams()
@@ -166,6 +307,6 @@ namespace Brasileirao_API.Data
 
         public DbSet<PushToken> Token { get; set; }
 
-        public DbSet<LiveGame> LiveGame{ get; set; }
+        public DbSet<LiveGame> LiveGame { get; set; }
     }
 }

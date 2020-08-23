@@ -12,7 +12,7 @@ namespace Brasileirao_API.Models
         public List<string> Tokens { get; set; }
 
         [JsonProperty("content_available")]
-        public string ContentAvailable { get; set; }
+        public bool ContentAvailable { get; set; }
 
         [JsonProperty("notification")]
         public Notification NotificationPush { get; set; }

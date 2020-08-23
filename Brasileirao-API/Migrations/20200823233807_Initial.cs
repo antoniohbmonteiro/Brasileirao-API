@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Brasileirao_API.Migrations
 {
-    public partial class VersaoInicial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,6 +45,8 @@ namespace Brasileirao_API.Migrations
                     Round = table.Column<int>(nullable: false),
                     Day = table.Column<string>(nullable: false),
                     Hour = table.Column<string>(nullable: false),
+                    HomeGols = table.Column<int>(nullable: false),
+                    GuestGols = table.Column<int>(nullable: false),
                     HomeTeamId = table.Column<int>(nullable: false),
                     GuestTeamId = table.Column<int>(nullable: false)
                 },
@@ -72,6 +74,8 @@ namespace Brasileirao_API.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<string>(nullable: false),
+                    Time = table.Column<string>(nullable: false),
+                    Minutes = table.Column<string>(nullable: false),
                     Title = table.Column<string>(nullable: false),
                     Message = table.Column<string>(nullable: false),
                     GameId = table.Column<int>(nullable: false)
@@ -111,6 +115,35 @@ namespace Brasileirao_API.Migrations
                     { 2, "ava", "http://s.glbimg.com/es/sde/f/equipes/2014/04/14/avai_60x60_.png", "Avaí", "Campo Avaí" },
                     { 9, "gre", "http://s.glbimg.com/es/sde/f/equipes/2014/04/14/gremio_60x60.png", "Grêmio", "Campo Grêmio" },
                     { 19, "san", "http://s.glbimg.com/es/sde/f/equipes/2014/04/14/santos_60x60.png", "Santos", "Campo Santos" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Game",
+                columns: new[] { "Id", "Day", "GuestGols", "GuestTeamId", "HomeGols", "HomeTeamId", "Hour", "Round" },
+                values: new object[,]
+                {
+                    { 2, "26/08", 0, 4, 0, 3, "19:00", 1 },
+                    { 3, "27/08", 0, 8, 0, 1, "15:00", 1 },
+                    { 1, "26/08", 0, 10, 0, 7, "17:00", 1 },
+                    { 7, "28/08", 0, 6, 0, 11, "17:00", 1 },
+                    { 9, "29/08", 0, 14, 0, 2, "15:00", 1 },
+                    { 4, "27/08", 0, 15, 0, 9, "17:00", 1 },
+                    { 8, "28/08", 0, 13, 0, 17, "19:00", 1 },
+                    { 6, "28/08", 0, 5, 0, 18, "15:00", 1 },
+                    { 5, "27/08", 0, 16, 0, 19, "19:00", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "LiveGame",
+                columns: new[] { "Id", "GameId", "Message", "Minutes", "Time", "Title", "Type" },
+                values: new object[,]
+                {
+                    { 5, 2, "Matheuzinho tenta afastar, mas chuta o vento", "7'", "1º Tempo", "ESPIRROU O TACO!", "text" },
+                    { 6, 2, "Lateral do Inter entorta o marcador do Dragão", "22'", "2º Tempo", "OLHA O RODINEI!", "text" },
+                    { 1, 1, "O árbitro Rafael Traci para o jogo e vai até a cabine de vídeo. Jogada revisada é do chute de Vitinho, desviado na mão de Kannemann.", "33'", "1º Tempo", "VAI NO VAR!", "text" },
+                    { 2, 1, "É um ataque mais leve, sem um jogador de referência, até porque temos jogadores rápidos. O lance do gol foi assim.", "40'", "1º Tempo", "FALA, GALHARDO", "text" },
+                    { 3, 1, "Atlético bombardeia o Cruzeiro em busca do gol de empate. Após uma série de finalizações em sequências (bloqueadas), Allan fica com o rebote e tenta um chute de primeira, mas a bola sobe muito e vai pra fora.", "12'", "2º Tempo", "NO REBOTE... PRA FORA!", "text" },
+                    { 4, 1, "Mensagem de quem faz este Tempo Real: vou deixar 'escanteio marcado' aqui no 'Ctrl + C'... Mais um!", "26'", "2º Tempo", "DE NOVO...", "text" }
                 });
 
             migrationBuilder.CreateIndex(
