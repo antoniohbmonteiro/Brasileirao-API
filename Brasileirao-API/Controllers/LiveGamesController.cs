@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Brasileirao_API.Data;
 using Brasileirao_API.Models;
+using FirebaseAdmin.Messaging;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using System.Net.Http;
+using System.Text;
 
 namespace Brasileirao_API.Controllers
 {
@@ -16,9 +21,12 @@ namespace Brasileirao_API.Controllers
     {
         private readonly BrasileiraoDBContext _context;
 
-        public LiveGamesController(BrasileiraoDBContext context)
+        private readonly IHttpClientFactory _clientFactory;
+
+        public LiveGamesController(BrasileiraoDBContext context, IHttpClientFactory httpClientFactory)
         {
             _context = context;
+            _clientFactory = httpClientFactory;
         }
 
         // GET: api/LiveGames
@@ -26,6 +34,14 @@ namespace Brasileirao_API.Controllers
         public async Task<ActionResult<IEnumerable<LiveGame>>> GetLiveGame()
         {
             return await _context.LiveGame.ToListAsync();
+        }
+
+        // GET: api/LiveGames
+        [Route("getLiveGamesByGame/{gameId}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<LiveGame>>> GetLiveGamesByGame(int gameId)
+        {
+            return await _context.LiveGame.Where(c => c.GameId == gameId).ToListAsync();
         }
 
         // GET: api/LiveGames/5
@@ -82,6 +98,39 @@ namespace Brasileirao_API.Controllers
         {
             _context.LiveGame.Add(liveGame);
             await _context.SaveChangesAsync();
+
+            var tokens = await _context.Token.ToListAsync<PushToken>();
+
+            var registrationTokens = tokens.Select(c => c.Token).ToList();
+
+            var request = new HttpRequestMessage(HttpMethod.Post,
+                "https://fcm.googleapis.com/fcm/send");
+            request.Headers.TryAddWithoutValidation("Authorization", "key=AAAAxDTznoQ:APA91bGacTqXyAHk6KW98J9AWDLPaxu_e8hma4sB5KYJ7KDKFt7gKenAyzRKxE-ToyY2ggMM7oaUVZ9tv389TAowSV0RfVRWFVaM1UI02Aq0VGnDUcH1-nnHflXZn6EGPVIId8_DNOdl");
+            request.Headers.TryAddWithoutValidation("Content-Type", "application/json");
+
+            var tokenModel = new TokenModel
+            {
+                Tokens = registrationTokens,
+                ContentAvailable = "true",
+                NotificationPush = new TokenModel.Notification {Title= "Teste C#", Body = "Body C#"},
+                DataPush = new TokenModel.Data { Extra = "Teste Extra"}
+            };
+
+            var tokenJson = Newtonsoft.Json.JsonConvert.SerializeObject(tokenModel);
+
+            request.Content = new StringContent(tokenJson,
+                Encoding.UTF8, "application/json");
+
+            var client = _clientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var teste = "funfou";
+                var teste1 = teste;
+                var teste2 = teste1;
+
+            }
 
             return CreatedAtAction("GetLiveGame", new { id = liveGame.Id }, liveGame);
         }

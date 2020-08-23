@@ -76,6 +76,20 @@ namespace Brasileirao_API.Migrations
                     b.ToTable("LiveGame");
                 });
 
+            modelBuilder.Entity("Brasileirao_API.Models.PushToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Token");
+                });
+
             modelBuilder.Entity("Brasileirao_API.Models.Team", b =>
                 {
                     b.Property<int>("Id")

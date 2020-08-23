@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Brasileirao_API.Migrations
 {
     [DbContext(typeof(BrasileiraoDBContext))]
-    [Migration("20200823003440_Initial")]
-    partial class Initial
+    [Migration("20200823143212_VersaoInicial")]
+    partial class VersaoInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,6 +76,20 @@ namespace Brasileirao_API.Migrations
                     b.HasIndex("GameId");
 
                     b.ToTable("LiveGame");
+                });
+
+            modelBuilder.Entity("Brasileirao_API.Models.PushToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Token");
                 });
 
             modelBuilder.Entity("Brasileirao_API.Models.Team", b =>
