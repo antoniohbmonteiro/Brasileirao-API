@@ -7,18 +7,12 @@ using System.Threading.Tasks;
 
 namespace Brasileirao_API.Models
 {
-    public class Team
+    public class PushToken
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
-        public string Name { get; set; }
-        [Required]
-        public string Acronym { get; set; }
-        [Required]
-        public string Stadium { get; set; }
-        [Required]
-        public string Logo { get; set; }
+
+        public string Token { get; set; }
     }
 }

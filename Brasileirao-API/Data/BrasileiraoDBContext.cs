@@ -163,5 +163,9 @@ namespace Brasileirao_API.Data
         public DbSet<Team> Team { get; set; }
 
         public DbSet<Game> Game { get; set; }
+
+        public DbSet<PushToken> Token { get; set; }
+
+        public DbSet<LiveGame> LiveGame{ get; set; }
     }
 }

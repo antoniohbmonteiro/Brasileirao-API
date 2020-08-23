@@ -18,9 +18,18 @@
     <Compile Remove="Migrations\20200822214915_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200822220441_Initial.cs" />
     <Compile Remove="Migrations\20200822220441_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200822221227_Initial.cs" />
+    <Compile Remove="Migrations\20200822221227_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200822234922_Initial.cs" />
+    <Compile Remove="Migrations\20200822234922_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200822235015_Initial.cs" />
+    <Compile Remove="Migrations\20200822235015_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200823002906_Initial.cs" />
+    <Compile Remove="Migrations\20200823002906_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.7" />

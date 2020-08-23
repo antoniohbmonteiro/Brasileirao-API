@@ -7,18 +7,20 @@ using System.Threading.Tasks;
 
 namespace Brasileirao_API.Models
 {
-    public class Team
+    public class LiveGame
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string Type{ get; set; }
         [Required]
-        public string Acronym { get; set; }
+        public string Title { get; set; }
         [Required]
-        public string Stadium { get; set; }
-        [Required]
-        public string Logo { get; set; }
+        public string Message { get; set; }
+
+        public int GameId { get; set; }
+        public virtual Game Game{ get; set; }
+
     }
 }

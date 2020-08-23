@@ -12,57 +12,48 @@ namespace Brasileirao_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GamesController : ControllerBase
+    public class LiveGamesController : ControllerBase
     {
         private readonly BrasileiraoDBContext _context;
 
-        public GamesController(BrasileiraoDBContext context)
+        public LiveGamesController(BrasileiraoDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Games
+        // GET: api/LiveGames
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Game>>> GetGame()
+        public async Task<ActionResult<IEnumerable<LiveGame>>> GetLiveGame()
         {
-            return await
-                _context.Game
-                .Include(c => c.HomeTeam)
-                .Include(c => c.GuestTeam)
-                .Include(c => c.LiveGames)
-                .ToListAsync();
+            return await _context.LiveGame.ToListAsync();
         }
 
-        // GET: api/Games/5
+        // GET: api/LiveGames/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Game>> GetGame(int id)
+        public async Task<ActionResult<LiveGame>> GetLiveGame(int id)
         {
-            var game = await
-                _context.Game
-                .Include(c => c.HomeTeam)
-                .Include(c => c.GuestTeam)
-                .FirstOrDefaultAsync(i => i.Id == id);
+            var liveGame = await _context.LiveGame.FindAsync(id);
 
-            if (game == null)
+            if (liveGame == null)
             {
                 return NotFound();
             }
 
-            return game;
+            return liveGame;
         }
 
-        // PUT: api/Games/5
+        // PUT: api/LiveGames/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGame(int id, Game game)
+        public async Task<IActionResult> PutLiveGame(int id, LiveGame liveGame)
         {
-            if (id != game.Id)
+            if (id != liveGame.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(game).State = EntityState.Modified;
+            _context.Entry(liveGame).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +61,7 @@ namespace Brasileirao_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GameExists(id))
+                if (!LiveGameExists(id))
                 {
                     return NotFound();
                 }
@@ -83,37 +74,37 @@ namespace Brasileirao_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Games
+        // POST: api/LiveGames
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Game>> PostGame(Game game)
+        public async Task<ActionResult<LiveGame>> PostLiveGame(LiveGame liveGame)
         {
-            _context.Game.Add(game);
+            _context.LiveGame.Add(liveGame);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGame", new { id = game.Id }, game);
+            return CreatedAtAction("GetLiveGame", new { id = liveGame.Id }, liveGame);
         }
 
-        // DELETE: api/Games/5
+        // DELETE: api/LiveGames/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Game>> DeleteGame(int id)
+        public async Task<ActionResult<LiveGame>> DeleteLiveGame(int id)
         {
-            var game = await _context.Game.FindAsync(id);
-            if (game == null)
+            var liveGame = await _context.LiveGame.FindAsync(id);
+            if (liveGame == null)
             {
                 return NotFound();
             }
 
-            _context.Game.Remove(game);
+            _context.LiveGame.Remove(liveGame);
             await _context.SaveChangesAsync();
 
-            return game;
+            return liveGame;
         }
 
-        private bool GameExists(int id)
+        private bool LiveGameExists(int id)
         {
-            return _context.Game.Any(e => e.Id == id);
+            return _context.LiveGame.Any(e => e.Id == id);
         }
     }
 }

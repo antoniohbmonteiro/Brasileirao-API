@@ -9,6 +9,8 @@ namespace Brasileirao_API.Models
 {
     public class Game
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
         public int Round { get; set; }
@@ -27,6 +29,7 @@ namespace Brasileirao_API.Models
         public virtual Team HomeTeam { get; set; }
         public virtual Team GuestTeam { get; set; }
 
+        public virtual ICollection<LiveGame> LiveGames { get; set; }
     }
 
 }

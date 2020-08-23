@@ -12,57 +12,48 @@ namespace Brasileirao_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GamesController : ControllerBase
+    public class PushTokensController : ControllerBase
     {
         private readonly BrasileiraoDBContext _context;
 
-        public GamesController(BrasileiraoDBContext context)
+        public PushTokensController(BrasileiraoDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Games
+        // GET: api/PushTokens
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Game>>> GetGame()
+        public async Task<ActionResult<IEnumerable<PushToken>>> GetToken()
         {
-            return await
-                _context.Game
-                .Include(c => c.HomeTeam)
-                .Include(c => c.GuestTeam)
-                .Include(c => c.LiveGames)
-                .ToListAsync();
+            return await _context.Token.ToListAsync();
         }
 
-        // GET: api/Games/5
+        // GET: api/PushTokens/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Game>> GetGame(int id)
+        public async Task<ActionResult<PushToken>> GetPushToken(int id)
         {
-            var game = await
-                _context.Game
-                .Include(c => c.HomeTeam)
-                .Include(c => c.GuestTeam)
-                .FirstOrDefaultAsync(i => i.Id == id);
+            var pushToken = await _context.Token.FindAsync(id);
 
-            if (game == null)
+            if (pushToken == null)
             {
                 return NotFound();
             }
 
-            return game;
+            return pushToken;
         }
 
-        // PUT: api/Games/5
+        // PUT: api/PushTokens/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGame(int id, Game game)
+        public async Task<IActionResult> PutPushToken(int id, PushToken pushToken)
         {
-            if (id != game.Id)
+            if (id != pushToken.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(game).State = EntityState.Modified;
+            _context.Entry(pushToken).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +61,7 @@ namespace Brasileirao_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GameExists(id))
+                if (!PushTokenExists(id))
                 {
                     return NotFound();
                 }
@@ -83,37 +74,37 @@ namespace Brasileirao_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Games
+        // POST: api/PushTokens
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Game>> PostGame(Game game)
+        public async Task<ActionResult<PushToken>> PostPushToken(PushToken pushToken)
         {
-            _context.Game.Add(game);
+            _context.Token.Add(pushToken);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGame", new { id = game.Id }, game);
+            return CreatedAtAction("GetPushToken", new { id = pushToken.Id }, pushToken);
         }
 
-        // DELETE: api/Games/5
+        // DELETE: api/PushTokens/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Game>> DeleteGame(int id)
+        public async Task<ActionResult<PushToken>> DeletePushToken(int id)
         {
-            var game = await _context.Game.FindAsync(id);
-            if (game == null)
+            var pushToken = await _context.Token.FindAsync(id);
+            if (pushToken == null)
             {
                 return NotFound();
             }
 
-            _context.Game.Remove(game);
+            _context.Token.Remove(pushToken);
             await _context.SaveChangesAsync();
 
-            return game;
+            return pushToken;
         }
 
-        private bool GameExists(int id)
+        private bool PushTokenExists(int id)
         {
-            return _context.Game.Any(e => e.Id == id);
+            return _context.Token.Any(e => e.Id == id);
         }
     }
 }

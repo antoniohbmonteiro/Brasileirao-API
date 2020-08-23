@@ -48,6 +48,34 @@ namespace Brasileirao_API.Migrations
                     b.ToTable("Game");
                 });
 
+            modelBuilder.Entity("Brasileirao_API.Models.LiveGame", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("LiveGame");
+                });
+
             modelBuilder.Entity("Brasileirao_API.Models.Team", b =>
                 {
                     b.Property<int>("Id")
@@ -55,15 +83,19 @@ namespace Brasileirao_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Acronym")
+                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Logo")
+                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Stadium")
+                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
@@ -236,6 +268,15 @@ namespace Brasileirao_API.Migrations
                     b.HasOne("Brasileirao_API.Models.Team", "HomeTeam")
                         .WithMany()
                         .HasForeignKey("HomeTeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Brasileirao_API.Models.LiveGame", b =>
+                {
+                    b.HasOne("Brasileirao_API.Models.Game", "Game")
+                        .WithMany("LiveGames")
+                        .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

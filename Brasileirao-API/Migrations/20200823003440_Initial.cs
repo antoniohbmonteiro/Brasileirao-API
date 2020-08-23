@@ -13,10 +13,10 @@ namespace Brasileirao_API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Acronym = table.Column<string>(nullable: true),
-                    Stadium = table.Column<string>(nullable: true),
-                    Logo = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false),
+                    Acronym = table.Column<string>(nullable: false),
+                    Stadium = table.Column<string>(nullable: false),
+                    Logo = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,6 +48,28 @@ namespace Brasileirao_API.Migrations
                         name: "FK_Game_Team_HomeTeamId",
                         column: x => x.HomeTeamId,
                         principalTable: "Team",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LiveGame",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Type = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: false),
+                    Message = table.Column<string>(nullable: false),
+                    GameId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LiveGame", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LiveGame_Game_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Game",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -87,10 +109,18 @@ namespace Brasileirao_API.Migrations
                 name: "IX_Game_HomeTeamId",
                 table: "Game",
                 column: "HomeTeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LiveGame_GameId",
+                table: "LiveGame",
+                column: "GameId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "LiveGame");
+
             migrationBuilder.DropTable(
                 name: "Game");
 
