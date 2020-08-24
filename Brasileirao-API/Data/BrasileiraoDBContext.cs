@@ -289,7 +289,7 @@ namespace Brasileirao_API.Data
          ""name"":""Fluminense"",
          ""acronym"":""flu"",
          ""stadium"":""Campo Fluminense"",
-         ""logo"":""http://s.glbimg.com/es/sde/f/equipes/2015/05/05/fluminense-logo-65x65.png""
+         ""logo"":""http://s.glbimg.com/es/sde/f/equipes/2015/05/05/fluminense-escudo-65x65.png""
       },
       {
          ""id"":19,
